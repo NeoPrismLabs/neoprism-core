@@ -1,7 +1,10 @@
 name: neoprism_core
-description: "A new Flutter package project."
+description: "A Flutter UI toolkit featuring neobrutalism design with pluggable architecture for analytics and localization."
 version: 0.0.1
-homepage:
+repository: https://github.com/NeoPrismLabs/neoprism-core
+homepage: https://github.com/NeoPrismLabs/neoprism-core
+documentation: https://github.com/NeoPrismLabs/neoprism-core/blob/main/README.md
+issue_tracker: https://github.com/NeoPrismLabs/neoprism-core/issues
 
 environment:
   sdk: ^3.6.0
