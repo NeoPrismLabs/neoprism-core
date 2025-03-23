@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:neoprism_core/neoprism_core.dart';
+import 'package:neoprism_example/config/theme/app_theme.dart';
 
 void main() {
   runApp(const ExampleApp());
@@ -12,15 +13,8 @@ class ExampleApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'NeoPrism Example',
-      theme: ThemeData.light().copyWith(
-        extensions: [
-          const NeoPrismThemeData(
-            borderWidth: 4.0,
-            borderRadius: 8.0,
-            shadowOffset: Offset(6, 6),
-          ),
-        ],
-      ),
+      theme: AppTheme.lightTheme,
+      darkTheme: AppTheme.darkTheme,
       home: const ButtonExampleScreen(),
     );
   }
@@ -44,6 +38,7 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
         title: const Text('NeoPrism Button Example'),
@@ -60,33 +55,96 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
               style: Theme.of(context).textTheme.headlineMedium,
             ),
             const SizedBox(height: 32),
-            // Default button
+            // Standard button
             NeoButton(
               id: 'primary_button',
-              label: 'Click Me',
-              onPressed: _incrementCounter,
+              label: 'Standard Button',
+              onPressed: () => _incrementCounter(),
             ),
-            const SizedBox(height: 24),
-            // Custom styled button
-            NeoButton(
-              id: 'custom_button',
-              label: 'Custom Button',
-              backgroundColor: Colors.amber,
+            const SizedBox(height: 12),
+
+            // Button with icon
+            NeoButton.icon(
+              id: 'save_button',
+              icon: Icons.check,
+              label: 'Icon Button',
+              onPressed: () => _incrementCounter(),
+            ),
+            const SizedBox(height: 12),
+
+            // Compressed button
+            NeoButton.compressed(
+              id: 'compact_button',
+              label: 'Compact Button',
+              onPressed: () => _incrementCounter(),
+            ),
+            const SizedBox(height: 12),
+
+            // Small button
+            NeoButton.small(
+              id: 'small_button',
+              label: 'Small Button',
+              backgroundColor: Colors.grey[200],
               textColor: Colors.black,
-              borderColor: Colors.red,
-              onPressed: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(content: Text('Custom button pressed!')),
-                );
-              },
+              onPressed: () => _incrementCounter(),
             ),
-            const SizedBox(height: 24),
-            // Disabled button
-            const NeoButton(
-              id: 'disabled_button',
-              label: 'Disabled Button',
-              isEnabled: false,
+            const SizedBox(height: 12),
+
+            // Large button
+            NeoButton.large(
+              id: 'large_button',
+              label: 'Large Button',
+              backgroundColor: theme.colorScheme.secondary,
+              onPressed: () => _incrementCounter(),
             ),
+            const SizedBox(height: 12),
+
+            // Custom button
+            NeoButton.custom(
+              id: 'custom_button',
+              onPressed: () => _incrementCounter(),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.star, color: Colors.white),
+                  const SizedBox(width: 8),
+                  Text('Custom Button'),
+                  const SizedBox(width: 4),
+                  Icon(Icons.star, color: Colors.white),
+                ],
+              ),
+            ),
+            const SizedBox(height: 32),
+            const Text('Badge Examples:',
+                style: TextStyle(fontWeight: FontWeight.bold)),
+            const SizedBox(height: 12),
+
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              spacing: 10,
+              children: [
+                NeoBadge(
+                  id: 'basic_badge',
+                  label: 'New',
+                  backgroundColor: theme.colorScheme.primary,
+                ),
+                NeoBadge.status(
+                  id: 'active_status',
+                  label: 'Active',
+                  backgroundColor: Colors.green[400],
+                  shadowOffset: Offset(0, 0),
+                ),
+                NeoBadge.counter(
+                  id: 'notification_counter',
+                  count: 5,
+                ),
+                NeoBadge.dot(
+                  id: 'red_dot',
+                  backgroundColor: Colors.red,
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
           ],
         ),
       ),

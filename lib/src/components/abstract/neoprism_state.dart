@@ -17,38 +17,56 @@ abstract class NeoprismComponentState<T extends NeoPrismComponent>
     required Widget child,
     required BuildContext context,
     bool isPressed = false,
+    bool isHovered = false,
     Color? backgroundColor,
     Color? borderColor,
     double? borderWidth,
     double? borderRadius,
+    Offset? shadowOffset,
   }) {
     final themeData = getThemeData(context);
     final theme = Theme.of(context);
 
+    final Color effectiveBackgroundColor =
+        backgroundColor ?? theme.colorScheme.primary;
+    final Color hoverBackgroundColor = Color.lerp(
+        effectiveBackgroundColor, Colors.white, isHovered ? 0.1 : 0.0)!;
+
+    final bool shouldMoveToCoverShadow = isPressed || isHovered;
+    final Offset effectiveShadowOffset = shadowOffset ?? themeData.shadowOffset;
+
     return AnimatedContainer(
-      duration: const Duration(milliseconds: 100),
-      transform: isPressed
-          ? Matrix4.translationValues(
-              themeData.shadowOffset.dx / 2, themeData.shadowOffset.dy / 2, 0)
-          : Matrix4.translationValues(0, 0, 0),
-      child: Container(
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 150),
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius:
+            BorderRadius.circular(borderRadius ?? themeData.borderRadius),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black,
+            offset: effectiveShadowOffset,
+            blurRadius: 0,
+            spreadRadius: 0,
+          ),
+        ],
+      ),
+      child: AnimatedContainer(
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 150),
+        transform: Matrix4.translationValues(
+          shouldMoveToCoverShadow ? effectiveShadowOffset.dx : 0,
+          shouldMoveToCoverShadow ? effectiveShadowOffset.dy : 0,
+          0,
+        )..scale(isPressed ? 0.98 : 1.0),
         decoration: BoxDecoration(
-          color: backgroundColor ?? theme.colorScheme.primary,
+          color: hoverBackgroundColor,
           border: Border.all(
             color: borderColor ?? Colors.black,
             width: borderWidth ?? themeData.borderWidth,
           ),
           borderRadius:
               BorderRadius.circular(borderRadius ?? themeData.borderRadius),
-          boxShadow: isPressed
-              ? []
-              : [
-                  BoxShadow(
-                    color: Colors.black,
-                    offset: themeData.shadowOffset,
-                    blurRadius: 0,
-                  ),
-                ],
         ),
         child: child,
       ),
