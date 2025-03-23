@@ -83,7 +83,7 @@ class AppTheme {
       extensions: [
         // NeoPrism custom theme
         NeoPrismThemeData(
-          borderWidth: 1.5,
+          borderWidth: 2,
           borderRadius: 4.0,
           shadowOffset: const Offset(4, 4),
           // buttonTextStyle: _buttonTextStyle,
@@ -94,10 +94,7 @@ class AppTheme {
     );
   }
 
-  /// Get the dark theme for the app
   static ThemeData get darkTheme {
-    // For now, we'll use the same theme
-    // In a real app, you'd define dark mode colors
     return lightTheme;
   }
 
