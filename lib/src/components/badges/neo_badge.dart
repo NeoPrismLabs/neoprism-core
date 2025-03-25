@@ -1,3 +1,19 @@
+/// A neobrutalism-styled badge component for displaying status indicators,
+/// counters, or informational labels.
+///
+/// NeoBadge comes in various types including standard labels, status indicators,
+/// counters, and dot badges. Each type can be customized with different colors,
+/// sizes, and styles.
+///
+/// Example:
+/// ```dart
+/// NeoBadge(
+///   id: 'status_badge',
+///   label: 'New',
+///   backgroundColor: Colors.blue,
+/// )
+/// ```
+
 import 'package:flutter/material.dart';
 import '../abstract/neoprism_component.dart';
 import '../abstract/neoprism_state.dart';

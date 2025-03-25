@@ -1,3 +1,23 @@
+/// Theme configuration for NeoPrism components, providing consistent styling options.
+///
+/// NeoPrismThemeData allows customization of border width, border radius, shadow effects,
+/// and other style attributes that apply to all NeoPrism components.
+///
+/// Example:
+/// ```dart
+/// MaterialApp(
+///   theme: ThemeData.light().copyWith(
+///     extensions: [
+///       const NeoPrismThemeData(
+///         borderWidth: 3.0,
+///         borderRadius: 12.0,
+///         shadowOffset: Offset(4, 4),
+///       ),
+///     ],
+///   ),
+/// )
+/// ```
+
 import 'dart:ui';
 
 import 'package:flutter/material.dart';

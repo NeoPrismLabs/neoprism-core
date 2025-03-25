@@ -1,3 +1,21 @@
+/// A neobrutalism-styled text input field with support for labels, validation, and custom styling.
+///
+/// NeoInput provides a consistent text input experience with the neobrutalism design language,
+/// featuring bold borders, customizable colors, and interactive states.
+///
+/// Example:
+/// ```dart
+/// NeoInput(
+///   id: 'email_field',
+///   labelText: 'Email Address',
+///   hintText: 'Enter your email',
+///   validator: (value) {
+///     if (!value!.contains('@')) return 'Please enter a valid email';
+///     return null;
+///   },
+/// )
+/// ```
+
 import 'package:flutter/material.dart';
 import 'package:neoprism_core/src/components/abstract/neoprism_component.dart';
 import 'package:neoprism_core/src/components/abstract/neoprism_state.dart';

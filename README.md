@@ -406,6 +406,305 @@ Form(
 )
 ```
 
+### NeoAlertDialog
+
+A neobrutalism-styled dialog for alerts, confirmations, and user interactions.
+
+```dart
+NeoAlertDialog.show(
+  context: context,
+  id: 'info_dialog',
+  title: 'Information',
+  content: 'This is a basic neobrutalism-styled alert dialog.',
+  confirmLabel: 'Got it',
+);
+```
+
+#### Dialog Variants
+
+```dart
+// Confirmation dialog with two buttons
+NeoAlertDialog.show(
+  context: context,
+  id: 'confirm_dialog',
+  title: 'Confirm Action',
+  content: 'Are you sure you want to delete this item?',
+  confirmLabel: 'Yes, Delete',
+  cancelLabel: 'Cancel',
+  confirmButtonColor: Colors.red,
+  onConfirm: () {
+    // Handle deletion
+    Navigator.of(context).pop();
+  },
+);
+
+// Custom styled dialog
+NeoAlertDialog.show(
+  context: context,
+  id: 'styled_dialog',
+  title: 'Custom Style',
+  content: 'This dialog has custom colors and styling.',
+  confirmLabel: 'Cool!',
+  backgroundColor: Colors.yellow[100],
+  borderColor: Colors.deepOrange,
+  borderWidth: 4.0,
+  shadowOffset: const Offset(6, 6),
+  confirmButtonColor: Colors.deepOrange,
+);
+
+// Dialog with custom content widget
+NeoAlertDialog.show(
+  context: context,
+  id: 'custom_content_dialog',
+  title: 'Select Options',
+  contentWidget: Column(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      NeoCheckbox(
+        id: 'option_a',
+        value: _optionA,
+        onChanged: (value) => setState(() => _optionA = value),
+        label: 'Option A',
+      ),
+      SizedBox(height: 8),
+      NeoCheckbox(
+        id: 'option_b',
+        value: _optionB,
+        onChanged: (value) => setState(() => _optionB = value),
+        label: 'Option B',
+      ),
+    ],
+  ),
+  confirmLabel: 'Submit',
+  cancelLabel: 'Cancel',
+);
+
+// Multiple action buttons
+NeoAlertDialog.show(
+  context: context,
+  id: 'multi_action_dialog',
+  title: 'Choose an Action',
+  content: 'What would you like to do with this item?',
+  useCompressedButtons: true,
+  confirmLabel: null, // No default confirm button
+  additionalButtons: [
+    NeoButton.compressed(
+      id: 'view_button',
+      label: 'View',
+      backgroundColor: Colors.blue,
+      onPressed: () {
+        Navigator.of(context).pop('view');
+      },
+    ),
+    NeoButton.compressed(
+      id: 'edit_button',
+      label: 'Edit',
+      backgroundColor: Colors.green,
+      onPressed: () {
+        Navigator.of(context).pop('edit');
+      },
+    ),
+    NeoButton.compressed(
+      id: 'delete_button',
+      label: 'Delete',
+      backgroundColor: Colors.red,
+      onPressed: () {
+        Navigator.of(context).pop('delete');
+      },
+    ),
+  ],
+);
+
+// Error dialog
+NeoAlertDialog.show(
+  context: context,
+  id: 'error_dialog',
+  titleWidget: Row(
+    children: [
+      Icon(Icons.error_outline, color: Colors.red),
+      SizedBox(width: 8),
+      Text('Error', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+    ],
+  ),
+  content: 'Something went wrong. Please try again.',
+  confirmLabel: 'OK',
+  confirmButtonColor: Colors.red,
+  confirmTextColor: Colors.white,
+);
+```
+
+#### Dialog Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `String` | Unique identifier for the dialog |
+| `title` | `String?` | Dialog title text |
+| `titleWidget` | `Widget?` | Custom widget to replace the title |
+| `content` | `String?` | Dialog content text |
+| `contentWidget` | `Widget?` | Custom widget to replace the content |
+| `confirmLabel` | `String?` | Text for the confirm button (default: 'OK') |
+| `cancelLabel` | `String?` | Text for the cancel button (if null, no cancel button) |
+| `backgroundColor` | `Color?` | Background color of the dialog |
+| `borderColor` | `Color?` | Border color of the dialog |
+| `borderWidth` | `double?` | Width of the dialog border |
+| `borderRadius` | `double?` | Border radius of the dialog corners |
+| `shadowOffset` | `Offset?` | Shadow offset for the neobrutalism effect |
+| `confirmButtonColor` | `Color?` | Background color of the confirm button |
+| `cancelButtonColor` | `Color?` | Background color of the cancel button |
+| `confirmTextColor` | `Color?` | Text color of the confirm button |
+| `cancelTextColor` | `Color?` | Text color of the cancel button |
+| `buttonBorderColor` | `Color?` | Border color for all buttons |
+| `onConfirm` | `VoidCallback?` | Callback when confirm button is pressed |
+| `onCancel` | `VoidCallback?` | Callback when cancel button is pressed |
+| `reverseButtonOrder` | `bool` | Whether to reverse the order of buttons (default: false) |
+| `useCompressedButtons` | `bool` | Whether to use compressed button style (default: false) |
+| `additionalButtons` | `List<Widget>?` | Additional buttons to display |
+
+#### Static Show Method
+
+The `NeoAlertDialog.show()` static method provides a convenient way to display a dialog without manually creating a dialog instance. It includes an additional `barrierDismissible` parameter to control whether the dialog can be dismissed by tapping outside of it.
+
+```dart
+Future<T?> show<T>({
+  required BuildContext context,
+  required String id,
+  String? title,
+  Widget? titleWidget,
+  String? content,
+  Widget? contentWidget,
+  String confirmLabel = 'OK',
+  String? cancelLabel,
+  Color? backgroundColor,
+  Color? borderColor,
+  double? borderWidth,
+  double? borderRadius,
+  Offset? shadowOffset,
+  Color? confirmButtonColor,
+  Color? cancelButtonColor,
+  Color? confirmTextColor,
+  Color? cancelTextColor,
+  Color? buttonBorderColor,
+  VoidCallback? onConfirm,
+  VoidCallback? onCancel,
+  bool barrierDismissible = true,
+  bool reverseButtonOrder = false,
+  bool useCompressedButtons = false,
+  List<Widget>? additionalButtons,
+})
+```
+
+#### Advanced Dialog Usage
+
+Dialogs can be used to create interactive workflows:
+
+```dart
+// Multi-step dialog example
+void showMultiStepDialog(BuildContext context) {
+  // Step 1: Show initial dialog
+  NeoAlertDialog.show(
+    context: context,
+    id: 'step1_dialog',
+    title: 'Step 1 of 3',
+    content: 'This is the first step of a multi-step dialog workflow.',
+    confirmLabel: 'Next',
+    cancelLabel: 'Cancel',
+    onConfirm: () {
+      // Close current dialog
+      Navigator.of(context).pop();
+      
+      // Step 2: Show second dialog
+      NeoAlertDialog.show(
+        context: context,
+        id: 'step2_dialog',
+        title: 'Step 2 of 3',
+        content: 'Select your preferences:',
+        contentWidget: NeoCheckbox(
+          id: 'preference_checkbox',
+          value: _preferenceEnabled,
+          onChanged: (value) => setState(() => _preferenceEnabled = value),
+          label: 'Enable feature',
+        ),
+        confirmLabel: 'Next',
+        cancelLabel: 'Back',
+        onConfirm: () {
+          // Close current dialog
+          Navigator.of(context).pop();
+          
+          // Step 3: Show third dialog
+          NeoAlertDialog.show(
+            context: context,
+            id: 'step3_dialog',
+            title: 'Step 3 of 3',
+            content: 'Complete the process by clicking Finish.',
+            confirmLabel: 'Finish',
+            cancelLabel: 'Back',
+            onConfirm: () {
+              // Process completed
+              Navigator.of(context).pop();
+              
+              // Show completion message
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Process completed!')),
+              );
+            },
+            onCancel: () {
+              // Go back to step 2
+              Navigator.of(context).pop();
+              showMultiStepDialog(context);
+            },
+          );
+        },
+        onCancel: () {
+          // Go back to step 1
+          Navigator.of(context).pop();
+          showMultiStepDialog(context);
+        },
+      );
+    },
+  );
+}
+```
+
+### Combining Dialog with Other Components
+
+NeoAlertDialog integrates seamlessly with other NeoPrism components:
+
+```dart
+// Button that shows a dialog
+NeoButton(
+  id: 'show_dialog_button',
+  label: 'Show Settings',
+  onPressed: () {
+    NeoAlertDialog.show(
+      context: context,
+      id: 'settings_dialog',
+      title: 'Settings',
+      contentWidget: Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          NeoInput(
+            id: 'username_input',
+            labelText: 'Username',
+            controller: _usernameController,
+          ),
+          SizedBox(height: 12),
+          NeoCheckbox(
+            id: 'notifications_checkbox',
+            value: _notificationsEnabled,
+            onChanged: (value) => setState(() => _notificationsEnabled = value),
+            label: 'Enable notifications',
+          ),
+        ],
+      ),
+      confirmLabel: 'Save',
+      cancelLabel: 'Cancel',
+      onConfirm: _saveSettings,
+    );
+  },
+),
+```
+
 ## Component Interactions
 
 All NeoPrism components automatically track user interactions using the internal tracking system. These interactions include:
@@ -482,19 +781,6 @@ NeoPrism components use a consistent architecture:
 1. **NeoPrismComponent**: Abstract base class for all components
 2. **NeoprismComponentState**: Base state class providing shared functionality
 3. **Theme Integration**: Components automatically adapt to the NeoPrismThemeData
-
-### Component State Tracking
-
-Each component includes built-in interaction tracking:
-
-```dart
-// Components track interactions automatically
-NeoButton(
-  id: 'signup_button',
-  label: 'Sign Up',
-  onPressed: () {},
-)
-```
 
 ## Additional information
 

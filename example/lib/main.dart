@@ -269,7 +269,29 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
                     onChanged: (value) => setState(() => _isSelected = value),
                   ),
                 ],
-              )
+              ),
+
+              NeoButton(
+                id: 'show_dialog_button',
+                label: 'Show Dialog',
+                onPressed: () {
+                  NeoAlertDialog.show(
+                    context: context,
+                    id: 'example_dialog',
+                    title: 'Sample Dialog',
+                    content:
+                        'This is an example of the NeoAlertDialog component.',
+                    confirmLabel: 'Cool!',
+                    cancelLabel: 'Close',
+                    onConfirm: () {
+                      setState(() {
+                        _counter += 5;
+                      });
+                      Navigator.of(context).pop();
+                    },
+                  );
+                },
+              ),
             ],
           ),
         ),

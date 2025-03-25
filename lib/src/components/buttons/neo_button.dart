@@ -1,3 +1,19 @@
+/// A neobrutalism-styled button with interactive hover and press animations.
+///
+/// NeoButton provides a distinctive visual style with bold borders, customizable colors,
+/// and interactive behavior that mimics physical movement when pressed or hovered.
+///
+/// Example:
+/// ```dart
+/// NeoButton(
+///   id: 'primary_button',
+///   label: 'Click Me',
+///   onPressed: () {
+///     print('Button clicked!');
+///   },
+/// )
+/// ```
+
 import 'package:flutter/material.dart';
 import '../abstract/neoprism_component.dart';
 import '../abstract/neoprism_state.dart';

@@ -1,3 +1,18 @@
+/// A neobrutalism-styled checkbox component with customizable appearance and behavior.
+///
+/// NeoCheckbox provides a visually distinctive checkbox that follows the neobrutalism
+/// design language, with support for labels, different sizes, and interactive states.
+///
+/// Example:
+/// ```dart
+/// NeoCheckbox(
+///   id: 'terms_checkbox',
+///   value: _termsAccepted,
+///   onChanged: (value) => setState(() => _termsAccepted = value),
+///   label: 'I accept the terms and conditions',
+/// )
+/// ```
+
 import 'package:flutter/material.dart';
 import 'package:neoprism_core/neoprism_core.dart';
 import 'package:neoprism_core/src/components/abstract/neoprism_state.dart';
