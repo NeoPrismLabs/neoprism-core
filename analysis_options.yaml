@@ -2,3 +2,18 @@ include: package:flutter_lints/flutter.yaml
 
 # Additional information about this file can be found at
 # https://dart.dev/guides/language/analysis-options
+
+linter:
+  rules:
+    # Add these rules to enforce better practices
+    - prefer_const_constructors
+    - prefer_const_constructors_in_immutables
+    - use_super_parameters
+    # - public_member_api_docs
+    - sort_constructors_first
+    - unnecessary_library_name
+
+analyzer:
+  errors:
+    # Set some lints to warnings instead of errors if needed
+    deprecated_member_use: info

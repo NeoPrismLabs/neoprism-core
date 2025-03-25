@@ -37,7 +37,7 @@ abstract class NeoprismComponentState<T extends NeoPrismComponent>
 
     return AnimatedContainer(
       curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 100),
       decoration: BoxDecoration(
         color: Colors.transparent,
         borderRadius:
@@ -53,12 +53,12 @@ abstract class NeoprismComponentState<T extends NeoPrismComponent>
       ),
       child: AnimatedContainer(
         curve: Curves.easeOut,
-        duration: const Duration(milliseconds: 150),
+        duration: Duration(milliseconds: isPressed ? 50 : 100),
         transform: Matrix4.translationValues(
           shouldMoveToCoverShadow ? effectiveShadowOffset.dx : 0,
           shouldMoveToCoverShadow ? effectiveShadowOffset.dy : 0,
           0,
-        )..scale(isPressed ? 0.98 : 1.0),
+        ),
         decoration: BoxDecoration(
           color: hoverBackgroundColor,
           border: Border.all(

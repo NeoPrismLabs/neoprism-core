@@ -35,6 +35,7 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
   bool _importantOption = true;
   bool _subscribeToNewsletter = false;
   bool _isSelected = true;
+  Map<String, bool> _toggleValues = {};
 
   void _incrementCounter() {
     setState(() {
@@ -153,7 +154,7 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
               ),
               const SizedBox(height: 16),
               Container(
-                width: MediaQuery.of(context).size.width / 2,
+                width: MediaQuery.of(context).size.width / 1.5,
                 padding:
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
                 child: Column(
@@ -270,7 +271,10 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
                   ),
                 ],
               ),
-
+              const SizedBox(height: 32),
+              Text('Alert Examples:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
               NeoButton(
                 id: 'show_dialog_button',
                 label: 'Show Dialog',
@@ -292,6 +296,305 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
                   );
                 },
               ),
+              const SizedBox(height: 32),
+              Text('Card Examples:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+
+              // Basic card
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'basic_card',
+                  backgroundColor: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Basic Card',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 8),
+                      Text(
+                          'This is a simple card with default styling. It demonstrates the basic neobrutalism card design.'),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Card with custom colors
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'colored_card',
+                  backgroundColor: Colors.amber[100],
+                  borderColor: Colors.amber[800],
+                  borderWidth: 4,
+                  elevation: 1.5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Custom Styled Card',
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.amber[900])),
+                      SizedBox(height: 8),
+                      Text(
+                          'This card uses custom colors, border width, and elevation to create a unique look.'),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Interactive card
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard.interactive(
+                  id: 'interactive_card',
+                  backgroundColor: theme.colorScheme.primary,
+                  borderColor: Colors.black,
+                  borderWidth: 2,
+                  elevation: 1.5,
+                  onTap: () {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text('Interactive Card Tapped!')));
+                  },
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.touch_app, color: Colors.black),
+                      SizedBox(width: 12),
+                      Flexible(
+                        fit: FlexFit.loose,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Interactive Card',
+                                style: TextStyle(
+                                    fontSize: 18, fontWeight: FontWeight.bold)),
+                            Text(
+                                'Tap this card to trigger an action. Interactive cards can be used for navigation or selection.'),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              const SizedBox(height: 32),
+              Text('Toggle Examples:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+
+              // Basic toggles in a card
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'basic_toggles',
+                  backgroundColor: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Basic Toggles',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+
+                      // Basic toggle with default styling
+                      NeoToggle(
+                        id: 'toggle_basic',
+                        value: _toggleValues['basic'] ?? false,
+                        onChanged: (value) {
+                          setState(() {
+                            _toggleValues['basic'] = value;
+                          });
+                        },
+                        label: 'Default Toggle',
+                      ),
+                      SizedBox(height: 12),
+
+                      // Disabled toggle
+                      NeoToggle(
+                        id: 'toggle_disabled',
+                        value: true,
+                        onChanged: null,
+                        enabled: false,
+                        label: 'Disabled Toggle',
+                      ),
+                      SizedBox(height: 12),
+
+                      // Toggle with label on left
+                      NeoToggle(
+                        id: 'toggle_left_label',
+                        value: _toggleValues['leftLabel'] ?? true,
+                        onChanged: (value) {
+                          setState(() {
+                            _toggleValues['leftLabel'] = value;
+                          });
+                        },
+                        label: 'Label on Left',
+                        labelOnLeft: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Styled toggles
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'styled_toggles',
+                  backgroundColor: Colors.grey[50],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Custom Styled Toggles',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+
+                      // Custom colors
+                      NeoToggle(
+                        id: 'toggle_custom_colors',
+                        value: _toggleValues['customColors'] ?? true,
+                        onChanged: (value) {
+                          setState(() {
+                            _toggleValues['customColors'] = value;
+                          });
+                        },
+                        label: 'Custom Colors',
+                        activeColor: Colors.green,
+                        inactiveColor: Colors.red[100],
+                        borderColor: Colors.black87,
+                      ),
+                      SizedBox(height: 12),
+
+                      // Larger size
+                      NeoToggle(
+                        id: 'toggle_large',
+                        value: _toggleValues['large'] ?? false,
+                        onChanged: (value) {
+                          setState(() {
+                            _toggleValues['large'] = value;
+                          });
+                        },
+                        label: 'Large Toggle',
+                        size: 36.0,
+                        activeColor: Colors.purple,
+                        thumbColor: Colors.yellow,
+                      ),
+                      SizedBox(height: 12),
+
+                      // Custom thumb and border
+                      NeoToggle(
+                        id: 'toggle_custom_thumb',
+                        value: _toggleValues['customThumb'] ?? false,
+                        onChanged: (value) {
+                          setState(() {
+                            _toggleValues['customThumb'] = value;
+                          });
+                        },
+                        label: 'Custom Thumb Style',
+                        activeColor: Colors.blue[800],
+                        thumbColor: Colors.orange[300],
+                        borderColor: Colors.deepPurple,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Toggle with widget label
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'advanced_toggles',
+                  backgroundColor: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Advanced Usage',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+
+                      // Toggle with widget label
+                      NeoToggle(
+                        id: 'toggle_widget_label',
+                        value: _toggleValues['widgetLabel'] ?? false,
+                        onChanged: (value) {
+                          setState(() {
+                            _toggleValues['widgetLabel'] = value;
+                          });
+                        },
+                        labelWidget: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Icon(
+                              Icons.dark_mode,
+                              color: Colors.indigo,
+                              size: 20,
+                            ),
+                            SizedBox(width: 8),
+                            Text(
+                              'Dark Theme',
+                              style: TextStyle(
+                                color: Colors.indigo,
+                                fontWeight: FontWeight.w500,
+                              ),
+                            ),
+                          ],
+                        ),
+                        activeColor: Colors.indigo,
+                        inactiveColor: const Color.fromARGB(255, 140, 150, 207),
+                      ),
+                      SizedBox(height: 12),
+
+                      // Toggle in a settings-like layout
+                      Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text('Notifications',
+                                  style:
+                                      TextStyle(fontWeight: FontWeight.w500)),
+                              Text(
+                                'Enable notifications to stay updated',
+                                style: TextStyle(
+                                  fontSize: 12,
+                                  color: Colors.grey[700],
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          NeoToggle(
+                            id: 'toggle_notifications',
+                            value: _toggleValues['notifications'] ?? true,
+                            onChanged: (value) {
+                              setState(() {
+                                _toggleValues['notifications'] = value;
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
             ],
           ),
         ),

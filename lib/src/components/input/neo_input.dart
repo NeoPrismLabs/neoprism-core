@@ -16,6 +16,8 @@
 /// )
 /// ```
 
+library;
+
 import 'package:flutter/material.dart';
 import 'package:neoprism_core/src/components/abstract/neoprism_component.dart';
 import 'package:neoprism_core/src/components/abstract/neoprism_state.dart';

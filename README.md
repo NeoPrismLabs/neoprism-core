@@ -15,7 +15,7 @@ Add the package to your pubspec.yaml:
 
 ```yaml
 dependencies:
-  neoprism_core: ^0.0.1
+  neoprism_core: ^0.0.2
 ```
 
 ## Usage
@@ -158,37 +158,6 @@ NeoBadge.dot(
 | `size` | `NeoBadgeSize` | Size of the badge (small, medium, large) |
 | `isOutlined` | `bool` | Whether to use an outlined style |
 | `shadowOffset` | `Offset?` | Custom shadow offset (defaults to Offset.zero) |
-
-## Theming
-
-NeoPrism can be themed using the `NeoPrismThemeData` class:
-
-```dart
-MaterialApp(
-  theme: ThemeData.light().copyWith(
-    extensions: [
-      const NeoPrismThemeData(
-        borderWidth: 3.0,        // Width of component borders
-        borderRadius: 12.0,      // Radius of component corners
-        shadowOffset: Offset(5, 5), // Offset of the neobrutalism shadow
-        buttonTextStyle: TextStyle( // Default text style for buttons
-          fontWeight: FontWeight.bold,
-          fontSize: 16,
-        ),
-      ),
-    ],
-  ),
-)
-```
-
-### Theme Properties
-
-| Property | Type | Default | Description |
-|----------|------|---------|-------------|
-| `borderWidth` | `double` | `3.0` | Width of component borders |
-| `borderRadius` | `double` | `8.0` | Radius of component corners |
-| `shadowOffset` | `Offset` | `Offset(3, 3)` | Offset of the component shadow |
-| `buttonTextStyle` | `TextStyle?` | `null` | Default text style for buttons |
 
 
 ### NeoInput
@@ -705,6 +674,180 @@ NeoButton(
 ),
 ```
 
+```markdown
+### NeoCard
+
+A neobrutalism-styled card container for organizing content with distinctive borders and shadow effects.
+
+```dart
+// Basic card
+NeoCard(
+  id: 'basic_card',
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text('Card Title', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      SizedBox(height: 8),
+      Text('This is a basic card with default styling.'),
+    ],
+  ),
+)
+```
+
+#### Card Variants
+
+```dart
+// Custom styled card
+NeoCard(
+  id: 'custom_card',
+  backgroundColor: Colors.amber[100],
+  borderColor: Colors.amber[800],
+  borderWidth: 4,
+  elevation: 1.5,
+  child: Text('Custom styled card with unique colors and border'),
+)
+
+// Interactive card
+NeoCard.interactive(
+  id: 'interactive_card',
+  onTap: () {
+    print('Card was tapped!');
+  },
+  child: Row(
+    children: [
+      Icon(Icons.touch_app),
+      SizedBox(width: 8),
+      Text('Tap this card to trigger an action'),
+    ],
+  ),
+)
+
+// Card with nested content
+NeoCard(
+  id: 'media_card',
+  padding: EdgeInsets.zero,
+  child: Column(
+    children: [
+      Container(
+        height: 150,
+        color: Colors.blue[200],
+        child: Center(child: Icon(Icons.image, size: 50)),
+      ),
+      Padding(
+        padding: const EdgeInsets.all(16),
+        child: Text('Cards can contain media content and other widgets'),
+      ),
+    ],
+  ),
+)
+```
+
+#### Card Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `String` | Unique identifier for the card |
+| `child` | `Widget` | Content to display inside the card |
+| `backgroundColor` | `Color?` | Background color of the card |
+| `borderColor` | `Color?` | Border color of the card |
+| `borderWidth` | `double?` | Width of the card border |
+| `borderRadius` | `double?` | Corner radius of the card |
+| `shadowOffset` | `Offset?` | Offset of the neobrutalism shadow |
+| `padding` | `EdgeInsetsGeometry` | Inner padding of the card (default: 16px all sides) |
+| `elevation` | `double` | Controls shadow intensity (default: 1.0) |
+| `interactive` | `bool` | Whether the card responds to tap interactions |
+| `onTap` | `VoidCallback?` | Function called when an interactive card is tapped |
+
+### NeoToggle
+
+A neobrutalism-styled toggle switch component for binary selection options.
+
+```dart
+NeoToggle(
+  id: 'dark_mode_toggle',
+  value: _isDarkMode,
+  onChanged: (value) {
+    setState(() => _isDarkMode = value);
+  },
+  label: 'Dark Mode',
+)
+```
+
+#### Toggle Variants
+
+```dart
+// Custom colors
+NeoToggle(
+  id: 'notifications_toggle',
+  value: _notificationsEnabled,
+  onChanged: (value) => setState(() => _notificationsEnabled = value),
+  label: 'Notifications',
+  activeColor: Colors.green,
+  inactiveColor: Colors.red[100],
+)
+
+// Larger size
+NeoToggle(
+  id: 'wifi_toggle',
+  value: _wifiEnabled,
+  onChanged: (value) => setState(() => _wifiEnabled = value),
+  label: 'WiFi',
+  size: 36.0,
+)
+
+// Label on left
+NeoToggle(
+  id: 'bluetooth_toggle',
+  value: _bluetoothEnabled,
+  onChanged: (value) => setState(() => _bluetoothEnabled = value),
+  label: 'Bluetooth',
+  labelOnLeft: true,
+)
+
+// Disabled toggle
+NeoToggle(
+  id: 'premium_toggle',
+  value: true,
+  onChanged: null,
+  enabled: false,
+  label: 'Premium Feature',
+)
+
+// Toggle with custom widget label
+NeoToggle(
+  id: 'theme_toggle',
+  value: _darkThemeEnabled,
+  onChanged: (value) => setState(() => _darkThemeEnabled = value),
+  labelWidget: Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      Icon(Icons.dark_mode, size: 16),
+      SizedBox(width: 4),
+      Text('Dark Theme'),
+    ],
+  ),
+)
+```
+
+#### Toggle Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `String` | Unique identifier for the toggle |
+| `value` | `bool` | Current state of the toggle (on/off) |
+| `onChanged` | `ValueChanged<bool>?` | Callback when toggle state changes |
+| `label` | `String?` | Text label displayed next to the toggle |
+| `labelWidget` | `Widget?` | Custom widget displayed instead of text label |
+| `activeColor` | `Color?` | Background color when toggle is on |
+| `inactiveColor` | `Color?` | Background color when toggle is off |
+| `thumbColor` | `Color?` | Color of the toggle thumb/knob |
+| `borderColor` | `Color?` | Border color of the toggle |
+| `size` | `double` | Size of the toggle (affects width/height) |
+| `enabled` | `bool` | Whether the toggle is enabled for interaction |
+| `labelOnLeft` | `bool` | Whether to position the label on the left side |
+| `shadowOffset` | `Offset?` | Custom shadow offset for the neobrutalism effect |
+```
+
 ## Component Interactions
 
 All NeoPrism components automatically track user interactions using the internal tracking system. These interactions include:
@@ -721,57 +864,131 @@ All NeoPrism components automatically track user interactions using the internal
   - `toggled` - When the checkbox is checked/unchecked
   - `focused` - When the checkbox receives focus
 
+- For NeoToggle:
+  - `toggled` - When the toggle is switched on/off
+  - `focused` - When the toggle receives focus
 
-## Combining Components
+- For NeoCard:
+  - `tapped` - When an interactive card is tapped
+```
 
-NeoPrism components are designed to work together seamlessly. Here's an example of a login form:
+
+Let's also add an example showing how to combine the new components:
+
+```markdown
+### Settings Panel Example
 
 ```dart
-Column(
-  children: [
-    Text('Login', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-    SizedBox(height: 24),
-    
-    NeoInput(
-      id: 'username',
-      labelText: 'Username',
-      prefixIcon: Icon(Icons.person),
-    ),
-    SizedBox(height: 16),
-    
-    NeoInput(
-      id: 'password',
-      labelText: 'Password',
-      obscureText: true,
-      prefixIcon: Icon(Icons.lock),
-    ),
-    SizedBox(height: 16),
-    
-    Row(
-      children: [
-        NeoCheckbox(
-          id: 'remember',
-          value: _rememberMe,
-          onChanged: (value) => setState(() => _rememberMe = value),
-          label: 'Remember me',
-        ),
-        Spacer(),
-        TextButton(
-          onPressed: () {},
-          child: Text('Forgot password?'),
-        ),
-      ],
-    ),
-    SizedBox(height: 24),
-    
-    NeoButton(
-      id: 'login_button',
-      label: 'Log In',
-      onPressed: _handleLogin,
-    ),
-  ],
+NeoCard(
+  id: 'settings_card',
+  backgroundColor: Colors.grey[100],
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      Text('App Settings', 
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+      SizedBox(height: 16),
+      
+      Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Dark Mode', style: TextStyle(fontWeight: FontWeight.w500)),
+                Text('Enable dark theme throughout the app',
+                     style: TextStyle(fontSize: 12, color: Colors.grey[700])),
+              ],
+            ),
+          ),
+          NeoToggle(
+            id: 'dark_mode_toggle',
+            value: _isDarkMode,
+            onChanged: (value) => setState(() => _isDarkMode = value),
+          ),
+        ],
+      ),
+      SizedBox(height: 12),
+      
+      Row(
+        children: [
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text('Notifications', style: TextStyle(fontWeight: FontWeight.w500)),
+                Text('Receive push notifications',
+                     style: TextStyle(fontSize: 12, color: Colors.grey[700])),
+              ],
+            ),
+          ),
+          NeoToggle(
+            id: 'notifications_toggle',
+            value: _notificationsEnabled,
+            onChanged: (value) => setState(() => _notificationsEnabled = value),
+          ),
+        ],
+      ),
+      SizedBox(height: 24),
+      
+      NeoButton(
+        id: 'save_settings',
+        label: 'Save Settings',
+        onPressed: _saveSettings,
+      ),
+    ],
+  ),
 )
 ```
+
+## Theming
+
+NeoPrism can be themed using the `NeoPrismThemeData` class:
+
+```dart
+MaterialApp(
+  theme: ThemeData.light().copyWith(
+    extensions: [
+      const NeoPrismThemeData(
+        borderWidth: 3.0,        // Width of component borders
+        borderRadius: 12.0,      // Radius of component corners
+        shadowOffset: Offset(5, 5), // Offset of the neobrutalism shadow
+        buttonTextStyle: TextStyle( // Default text style for buttons
+          fontWeight: FontWeight.bold,
+          fontSize: 16,
+        ),
+      ),
+    ],
+  ),
+)
+```
+
+### Theme Properties
+
+| Property | Type | Default | Description |
+|----------|------|---------|-------------|
+| `borderWidth` | `double` | `3.0` | Width of component borders |
+| `borderRadius` | `double` | `8.0` | Radius of component corners |
+| `shadowOffset` | `Offset` | `Offset(3, 3)` | Offset of the component shadow |
+| `buttonTextStyle` | `TextStyle?` | `null` | Default text style for buttons |
+
+
+
+## Component Interactions
+
+All NeoPrism components automatically track user interactions using the internal tracking system. These interactions include:
+
+- For NeoButton:
+  - `pressed` - When the button is clicked or tapped
+  - `hovered` - When the mouse hovers over the button
+
+- For NeoInput:
+  - `focused` - When the input receives focus
+  - `changed` - When the input value changes
+
+- For NeoCheckbox:
+  - `toggled` - When the checkbox is checked/unchecked
+  - `focused` - When the checkbox receives focus
 
 
 ## Component Architecture

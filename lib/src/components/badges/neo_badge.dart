@@ -14,6 +14,8 @@
 /// )
 /// ```
 
+library;
+
 import 'package:flutter/material.dart';
 import '../abstract/neoprism_component.dart';
 import '../abstract/neoprism_state.dart';
@@ -32,19 +34,6 @@ enum NeoBadgeType {
 }
 
 class NeoBadge extends NeoPrismComponent {
-  final String? label;
-  final Widget? icon;
-  final Widget? child;
-  final Color? backgroundColor;
-  final Color? textColor;
-  final Color? borderColor;
-  final NeoBadgeSize size;
-  final NeoBadgeType type;
-  final int? count;
-  final bool isOutlined;
-  final EdgeInsetsGeometry? padding;
-  final Offset? shadowOffset;
-
   const NeoBadge({
     required super.id,
     this.label,
@@ -66,7 +55,6 @@ class NeoBadge extends NeoPrismComponent {
               child != null,
           'Counter badges require a count, and non-counter badges require either a label, icon, or custom child.',
         );
-
   factory NeoBadge.status({
     required String id,
     required String label,
@@ -78,6 +66,25 @@ class NeoBadge extends NeoPrismComponent {
     Offset? shadowOffset,
     Key? key,
   }) = _NeoStatusBadge;
+  factory NeoBadge.dot({
+    required String id,
+    Color? backgroundColor,
+    Color? borderColor,
+    Offset? shadowOffset,
+    Key? key,
+  }) = _NeoDotBadge;
+  final String? label;
+  final Widget? icon;
+  final Widget? child;
+  final Color? backgroundColor;
+  final Color? textColor;
+  final Color? borderColor;
+  final NeoBadgeSize size;
+  final NeoBadgeType type;
+  final int? count;
+  final bool isOutlined;
+  final EdgeInsetsGeometry? padding;
+  final Offset? shadowOffset;
 
   factory NeoBadge.counter({
     required String id,
@@ -90,14 +97,6 @@ class NeoBadge extends NeoPrismComponent {
     Offset? shadowOffset,
     Key? key,
   }) = _NeoCounterBadge;
-
-  factory NeoBadge.dot({
-    required String id,
-    Color? backgroundColor,
-    Color? borderColor,
-    Offset? shadowOffset,
-    Key? key,
-  }) = _NeoDotBadge;
 
   @override
   String get componentType => 'NeoBadge';

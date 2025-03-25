@@ -14,6 +14,8 @@
 /// )
 /// ```
 
+library;
+
 import 'package:flutter/material.dart';
 import '../abstract/neoprism_component.dart';
 import '../abstract/neoprism_state.dart';
@@ -199,8 +201,60 @@ class NeoButton extends NeoPrismComponent {
 }
 
 class _NeoButtonState extends NeoprismComponentState<NeoButton> {
-  bool _isPressed = false;
   bool _isHovered = false;
+  bool _isPressed = false;
+  // Initialize directly to avoid hot reload issues
+  final FocusNode _focusNode = FocusNode();
+
+  @override
+  void initState() {
+    super.initState();
+    _focusNode.addListener(_handleFocusChange);
+  }
+
+  @override
+  void dispose() {
+    _focusNode.removeListener(_handleFocusChange);
+    _focusNode.dispose();
+    super.dispose();
+  }
+
+  void _handleFocusChange() {
+    setState(() {});
+
+    if (_focusNode.hasFocus) {
+      trackInteraction('focused');
+    }
+  }
+
+  // Use a single method for tap handling
+  void _handleTap() {
+    if (!widget.isEnabled) return;
+
+    // Set pressed state immediately
+    setState(() => _isPressed = true);
+
+    // Call onPressed callback
+    widget.onPressed?.call();
+    trackInteraction('pressed');
+
+    // Request focus
+    _focusNode.requestFocus();
+
+    // Reset pressed state after a short delay
+    Future.delayed(const Duration(milliseconds: 150), () {
+      if (mounted) {
+        setState(() => _isPressed = false);
+
+        // Unfocus after a bit longer
+        Future.delayed(const Duration(milliseconds: 50), () {
+          if (mounted && _focusNode.hasFocus) {
+            _focusNode.unfocus();
+          }
+        });
+      }
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -230,6 +284,7 @@ class _NeoButtonState extends NeoprismComponentState<NeoButton> {
       onEnter: widget.isEnabled
           ? (_) {
               setState(() => _isHovered = true);
+              trackInteraction('hovered');
             }
           : null,
       onExit: widget.isEnabled
@@ -238,33 +293,19 @@ class _NeoButtonState extends NeoprismComponentState<NeoButton> {
             }
           : null,
       child: GestureDetector(
-        onTapDown: widget.isEnabled
-            ? (_) {
-                setState(() => _isPressed = true);
-              }
-            : null,
-        onTapUp: widget.isEnabled
-            ? (_) {
-                setState(() => _isPressed = false);
-                widget.onPressed?.call();
-                trackInteraction('pressed');
-              }
-            : null,
-        onTapCancel: widget.isEnabled
-            ? () {
-                setState(() => _isPressed = false);
-              }
-            : null,
-        child: applyNeoBrutalism(
-          context: context,
-          isHovered: _isHovered,
-          isPressed: _isPressed,
-          backgroundColor: widget.isEnabled
-              ? (widget.backgroundColor ?? theme.colorScheme.primary)
-              : Colors.grey.shade300,
-          borderColor: widget.borderColor,
-          child: Padding(
-            padding: widget.padding,
+        behavior:
+            HitTestBehavior.opaque, // Essential for reliable tap detection
+        onTap: widget.isEnabled ? _handleTap : null,
+        child: Focus(
+          focusNode: _focusNode,
+          child: applyNeoBrutalism(
+            context: context,
+            isHovered: _isHovered && widget.isEnabled,
+            isPressed: _isPressed && widget.isEnabled,
+            backgroundColor: widget.isEnabled
+                ? (widget.backgroundColor ?? theme.colorScheme.primary)
+                : Colors.grey.shade300,
+            borderColor: widget.borderColor,
             child: Padding(
               padding: widget.padding,
               child: _buildButtonContent(
