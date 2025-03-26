@@ -15,19 +15,19 @@ class ExampleApp extends StatelessWidget {
       title: 'NeoPrism Example',
       theme: AppTheme.lightTheme,
       darkTheme: AppTheme.darkTheme,
-      home: const ButtonExampleScreen(),
+      home: const ExampleScreen(),
     );
   }
 }
 
-class ButtonExampleScreen extends StatefulWidget {
-  const ButtonExampleScreen({super.key});
+class ExampleScreen extends StatefulWidget {
+  const ExampleScreen({super.key});
 
   @override
-  State<ButtonExampleScreen> createState() => _ButtonExampleScreenState();
+  State<ExampleScreen> createState() => _ExampleScreenState();
 }
 
-class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
+class _ExampleScreenState extends State<ExampleScreen> {
   int _counter = 0;
   bool _acceptTerms = false;
   bool _rememberMe = true;
@@ -36,6 +36,9 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
   bool _subscribeToNewsletter = false;
   bool _isSelected = true;
   Map<String, bool> _toggleValues = {};
+  String? _selectedCountry;
+  String? _selectedFruit;
+  String? _selectedSize;
 
   void _incrementCounter() {
     setState(() {
@@ -595,6 +598,137 @@ class _ButtonExampleScreenState extends State<ButtonExampleScreen> {
                 ),
               ),
               const SizedBox(height: 32),
+              Text('Dropdown Examples:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+
+              // Basic dropdowns in a card
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'basic_dropdowns',
+                  backgroundColor: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Basic Dropdowns',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+
+                      // Basic dropdown
+                      NeoDropdown<String>(
+                        id: 'country_dropdown',
+                        value: _selectedCountry,
+                        items: [
+                          NeoDropdownItem(value: 'us', label: 'United States'),
+                          NeoDropdownItem(value: 'ca', label: 'Canada'),
+                          NeoDropdownItem(value: 'uk', label: 'United Kingdom'),
+                          NeoDropdownItem(value: 'au', label: 'Australia'),
+                          NeoDropdownItem(value: 'jp', label: 'Japan'),
+                          NeoDropdownItem(value: 'de', label: 'Germany'),
+                        ],
+                        onChanged: (value) {
+                          setState(() => _selectedCountry = value);
+                        },
+                        label: 'Select Country',
+                        placeholder: 'Choose a country',
+                      ),
+                      SizedBox(height: 16),
+
+                      // Dropdown with icons
+                      NeoDropdown<String>(
+                        id: 'fruit_dropdown',
+                        value: _selectedFruit,
+                        items: [
+                          NeoDropdownItem(
+                              value: 'apple',
+                              label: 'Apple',
+                              icon: Icons.apple),
+                          NeoDropdownItem(
+                              value: 'banana',
+                              label: 'Banana',
+                              icon: Icons.emoji_food_beverage),
+                          NeoDropdownItem(
+                              value: 'orange',
+                              label: 'Orange',
+                              icon: Icons.circle),
+                          NeoDropdownItem(
+                              value: 'grape',
+                              label: 'Grape',
+                              icon: Icons.bubble_chart),
+                        ],
+                        onChanged: (value) {
+                          setState(() => _selectedFruit = value);
+                        },
+                        label: 'Select Fruit',
+                        placeholder: 'Choose a fruit',
+                        showIcons: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Styled dropdowns
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'styled_dropdowns',
+                  backgroundColor: Colors.grey[50],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Custom Styled Dropdowns',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+
+                      // Dropdown with custom styling
+                      NeoDropdown<String>(
+                        id: 'size_dropdown',
+                        value: _selectedSize,
+                        items: [
+                          NeoDropdownItem(value: 'xs', label: 'Extra Small'),
+                          NeoDropdownItem(value: 's', label: 'Small'),
+                          NeoDropdownItem(value: 'm', label: 'Medium'),
+                          NeoDropdownItem(value: 'l', label: 'Large'),
+                          NeoDropdownItem(value: 'xl', label: 'Extra Large'),
+                        ],
+                        onChanged: (value) {
+                          setState(() => _selectedSize = value);
+                        },
+                        label: 'Select Size',
+                        placeholder: 'Choose a size',
+                        backgroundColor: Colors.blue[50],
+                        borderColor: Colors.blue[800],
+                        textColor: Colors.blue[900],
+                        dropdownIcon: Icons.arrow_drop_down_circle,
+                        dropdownIconColor: Colors.blue[800],
+                        borderWidth: 3,
+                        showDividers: true,
+                        size: NeoDropdownSize.large,
+                      ),
+
+                      // Disabled dropdown
+                      SizedBox(height: 16),
+                      NeoDropdown<String>(
+                        id: 'disabled_dropdown',
+                        value: 'disabled',
+                        items: [
+                          NeoDropdownItem(
+                              value: 'disabled', label: 'Disabled Dropdown'),
+                        ],
+                        onChanged: null,
+                        enabled: false,
+                        label: 'Disabled Dropdown',
+                        placeholder: 'This dropdown is disabled',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
             ],
           ),
         ),
