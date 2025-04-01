@@ -10,6 +10,7 @@ export 'src/components/alert/alert_dialog/neo_alert_dialog.dart';
 export 'src/components/card/neo_card.dart';
 export 'src/components/toggle/neo_toggle.dart';
 export 'src/components/dropdown/neo_dropdown.dart';
+export 'src/components/slider/neo_slider.dart';
 
 // Export theme
 export 'src/theme/theme.dart';

@@ -39,11 +39,22 @@ class _ExampleScreenState extends State<ExampleScreen> {
   String? _selectedCountry;
   String? _selectedFruit;
   String? _selectedSize;
+  double _volumeValue = 50.0;
+  double _opacityValue = 0.7;
+  double _temperatureValue = 22.5;
 
   void _incrementCounter() {
     setState(() {
       _counter++;
     });
+  }
+
+  Color _getTemperatureColor(double temp) {
+    if (temp < 20) return Colors.blue;
+    if (temp < 22) return Colors.teal;
+    if (temp < 24) return Colors.green;
+    if (temp < 26) return Colors.orange;
+    return Colors.red;
   }
 
   @override
@@ -724,6 +735,111 @@ class _ExampleScreenState extends State<ExampleScreen> {
                         enabled: false,
                         label: 'Disabled Dropdown',
                         placeholder: 'This dropdown is disabled',
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 32),
+
+              // Then add this example section
+              const SizedBox(height: 32),
+              Text('Slider Examples:',
+                  style: TextStyle(fontWeight: FontWeight.bold)),
+              const SizedBox(height: 16),
+
+              // Basic sliders in a card
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'basic_sliders',
+                  backgroundColor: Colors.white,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Basic Sliders',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+
+                      // Basic slider
+                      NeoSlider(
+                        id: 'volume_slider',
+                        value: _volumeValue,
+                        min: 0,
+                        max: 100,
+                        onChanged: (value) {
+                          setState(() => _volumeValue = value);
+                        },
+                        label: 'Volume',
+                        valueFormat: (value) => '${value.round()}%',
+                      ),
+                      SizedBox(height: 20),
+
+                      // Discrete slider with divisions
+                      NeoSlider(
+                        id: 'opacity_slider',
+                        value: _opacityValue,
+                        min: 0,
+                        max: 1,
+                        divisions: 10,
+                        onChanged: (value) {
+                          setState(() => _opacityValue = value);
+                        },
+                        label: 'Opacity',
+                        valueFormat: (value) => '${(value * 100).round()}%',
+                        showMinMaxLabels: true,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              const SizedBox(height: 16),
+
+              // Styled sliders
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: NeoCard(
+                  id: 'styled_sliders',
+                  backgroundColor: Colors.grey[50],
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text('Custom Styled Sliders',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      SizedBox(height: 16),
+
+                      // Custom color slider
+                      NeoSlider(
+                        id: 'temperature_slider',
+                        value: _temperatureValue,
+                        min: 16,
+                        max: 30,
+                        divisions: 14,
+                        onChanged: (value) {
+                          setState(() => _temperatureValue = value);
+                        },
+                        label: 'Temperature',
+                        valueFormat: (value) => '${value.toStringAsFixed(1)}°C',
+                        activeTrackColor:
+                            _getTemperatureColor(_temperatureValue),
+                        trackColor: Colors.grey[200],
+                        thumbColor: Colors.white,
+                        size: NeoSliderSize.large,
+                        showMinMaxLabels: true,
+                        showTicks: true,
+                      ),
+                      SizedBox(height: 20),
+
+                      // Disabled slider
+                      NeoSlider(
+                        id: 'disabled_slider',
+                        value: 35,
+                        min: 0,
+                        max: 100,
+                        label: 'Disabled Slider',
+                        enabled: false,
                       ),
                     ],
                   ),

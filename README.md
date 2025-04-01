@@ -848,6 +848,124 @@ NeoToggle(
 | `shadowOffset` | `Offset?` | Custom shadow offset for the neobrutalism effect |
 ```
 
+### NeoDropdown
+
+A neobrutalism-styled dropdown/select component for selecting a single option from a list of choices.
+
+```dart
+// Basic dropdown
+NeoDropdown<String>(
+  id: 'country_dropdown',
+  value: _selectedCountry,
+  items: [
+    NeoDropdownItem(value: 'us', label: 'United States'),
+    NeoDropdownItem(value: 'ca', label: 'Canada'),
+    NeoDropdownItem(value: 'uk', label: 'United Kingdom'),
+  ],
+  onChanged: (value) => setState(() => _selectedCountry = value),
+  label: 'Select Country',
+  placeholder: 'Choose a country',
+)
+```
+
+#### Dropdown Variants
+
+```dart
+// Dropdown with icons
+NeoDropdown<String>(
+  id: 'fruit_dropdown',
+  value: _selectedFruit,
+  items: [
+    NeoDropdownItem(value: 'apple', label: 'Apple', icon: Icons.apple),
+    NeoDropdownItem(value: 'banana', label: 'Banana', icon: Icons.emoji_food_beverage),
+    NeoDropdownItem(value: 'orange', label: 'Orange', icon: Icons.circle),
+  ],
+  onChanged: (value) => setState(() => _selectedFruit = value),
+  label: 'Select Fruit',
+  showIcons: true,
+)
+
+// Custom styled dropdown
+NeoDropdown<String>(
+  id: 'size_dropdown',
+  value: _selectedSize,
+  items: sizeOptions,
+  onChanged: (value) => setState(() => _selectedSize = value),
+  label: 'Select Size',
+  backgroundColor: Colors.blue[50],
+  borderColor: Colors.blue[800],
+  textColor: Colors.blue[900],
+  dropdownIcon: Icons.arrow_drop_down_circle,
+  borderWidth: 3,
+  showDividers: true,
+  size: NeoDropdownSize.large,
+)
+
+// Disabled dropdown
+NeoDropdown<String>(
+  id: 'disabled_dropdown',
+  value: 'disabled',
+  items: [NeoDropdownItem(value: 'disabled', label: 'Disabled Dropdown')],
+  onChanged: null,
+  enabled: false,
+  label: 'Disabled Dropdown',
+)
+
+// Dropdown with custom item builder
+NeoDropdown<User>(
+  id: 'users_dropdown',
+  value: _selectedUser,
+  items: users.map((user) => NeoDropdownItem(
+    value: user,
+    label: user.name,
+    icon: Icons.person,
+  )).toList(),
+  onChanged: (user) => setState(() => _selectedUser = user),
+  itemBuilder: (context, item, isSelected) => ListTile(
+    leading: CircleAvatar(child: Text(item.label[0])),
+    title: Text(item.label),
+    subtitle: Text('User ID: ${(item.value as User).id}'),
+    selected: isSelected,
+  ),
+)
+```
+
+#### NeoDropdown Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `String` | Unique identifier for the dropdown |
+| `items` | `List<NeoDropdownItem<T>>` | List of items to display in the dropdown |
+| `value` | `T?` | Currently selected value |
+| `onChanged` | `ValueChanged<T?>?` | Callback fired when selection changes |
+| `label` | `String?` | Text label displayed above the dropdown |
+| `placeholder` | `String?` | Text shown when no value is selected |
+| `backgroundColor` | `Color?` | Background color of the dropdown |
+| `borderColor` | `Color?` | Border color of the dropdown |
+| `textColor` | `Color?` | Text color for the dropdown |
+| `size` | `NeoDropdownSize` | Size preset (small, medium, large) |
+| `borderWidth` | `double?` | Width of the dropdown border |
+| `borderRadius` | `double?` | Corner radius of the dropdown |
+| `shadowOffset` | `Offset?` | Custom shadow offset for neobrutalism effect |
+| `enabled` | `bool` | Whether the dropdown is interactive |
+| `showIcons` | `bool` | Whether to show icons in dropdown items |
+| `dropdownIcon` | `IconData?` | Custom icon for the dropdown indicator |
+| `contentPadding` | `EdgeInsetsGeometry?` | Custom internal padding |
+| `showDividers` | `bool` | Whether to show dividers between items |
+| `menuMaxHeight` | `double?` | Maximum height of the dropdown menu |
+| `itemBuilder` | `Widget Function(...)` | Custom builder for dropdown items |
+
+#### NeoDropdownItem Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `value` | `T` | The data value associated with this item |
+| `label` | `String` | Display text for this item |
+| `icon` | `IconData?` | Optional icon to display with the item |
+| `customWidget` | `Widget?` | Optional custom widget instead of text |
+```
+
+
 ## Component Interactions
 
 All NeoPrism components automatically track user interactions using the internal tracking system. These interactions include:
