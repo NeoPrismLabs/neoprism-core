@@ -965,6 +965,94 @@ NeoDropdown<User>(
 | `customWidget` | `Widget?` | Optional custom widget instead of text |
 ```
 
+### NeoSlider
+
+A neobrutalism-styled slider component for selecting values from a continuous or discrete range.
+
+```dart
+// Basic slider
+NeoSlider(
+  id: 'volume_slider',
+  value: _volume,
+  min: 0.0,
+  max: 100.0,
+  onChanged: (value) => setState(() => _volume = value),
+  label: 'Volume',
+)
+```
+
+#### Slider Variants
+
+```dart
+// Slider with custom styling
+NeoSlider(
+  id: 'brightness_slider',
+  value: _brightness,
+  min: 0.0,
+  max: 100.0,
+  onChanged: (value) => setState(() => _brightness = value),
+  label: 'Brightness',
+  activeTrackColor: Colors.amber,
+  thumbColor: Colors.white,
+  borderColor: Colors.black,
+  showMinMaxLabels: true,
+)
+
+// Discrete slider with divisions
+NeoSlider(
+  id: 'rating_slider',
+  value: _rating,
+  min: 1.0,
+  max: 5.0,
+  divisions: 4,
+  onChanged: (value) => setState(() => _rating = value),
+  label: 'Rating',
+  showTicks: true,
+  valueFormat: (value) => '${value.toInt()} stars',
+)
+
+// Slider with custom thumb
+NeoSlider(
+  id: 'custom_thumb_slider',
+  value: _progress,
+  min: 0.0,
+  max: 100.0,
+  onChanged: (value) => setState(() => _progress = value),
+  thumbIcon: Icons.drag_handle,
+  size: NeoSliderSize.large,
+)
+```
+
+#### Slider Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `id` | `String` | Unique identifier for the slider |
+| `value` | `double` | Current value of the slider |
+| `min` | `double` | Minimum value (default: 0.0) |
+| `max` | `double` | Maximum value (default: 1.0) |
+| `divisions` | `int?` | Optional number of discrete divisions |
+| `onChanged` | `ValueChanged<double>?` | Callback when value changes |
+| `onChangeStart` | `ValueChanged<double>?` | Callback when dragging starts |
+| `onChangeEnd` | `ValueChanged<double>?` | Callback when dragging ends |
+| `label` | `String?` | Text label above the slider |
+| `showValue` | `bool` | Whether to show the current value (default: true) |
+| `valueFormat` | `String Function(double)?` | Custom formatter for displayed value |
+| `trackColor` | `Color?` | Color of the inactive track |
+| `activeTrackColor` | `Color?` | Color of the active track |
+| `thumbColor` | `Color?` | Color of the thumb/handle |
+| `borderColor` | `Color?` | Border color for the slider elements |
+| `size` | `NeoSliderSize` | Size preset (small, medium, large) |
+| `borderWidth` | `double?` | Width of the slider borders |
+| `borderRadius` | `double?` | Corner radius for the slider elements |
+| `shadowOffset` | `Offset?` | Shadow offset for neobrutalism effect |
+| `enabled` | `bool` | Whether the slider is interactive (default: true) |
+| `thumbIcon` | `IconData?` | Optional icon to display on the thumb |
+| `customThumb` | `Widget?` | Optional custom widget for the thumb |
+| `padding` | `EdgeInsetsGeometry` | Padding around the slider |
+| `showTicks` | `bool` | Whether to show tick marks for divisions |
+| `showMinMaxLabels` | `bool` | Whether to show min/max labels below the slider |
+
 
 ## Component Interactions
 
@@ -1089,24 +1177,6 @@ MaterialApp(
 | `borderRadius` | `double` | `8.0` | Radius of component corners |
 | `shadowOffset` | `Offset` | `Offset(3, 3)` | Offset of the component shadow |
 | `buttonTextStyle` | `TextStyle?` | `null` | Default text style for buttons |
-
-
-
-## Component Interactions
-
-All NeoPrism components automatically track user interactions using the internal tracking system. These interactions include:
-
-- For NeoButton:
-  - `pressed` - When the button is clicked or tapped
-  - `hovered` - When the mouse hovers over the button
-
-- For NeoInput:
-  - `focused` - When the input receives focus
-  - `changed` - When the input value changes
-
-- For NeoCheckbox:
-  - `toggled` - When the checkbox is checked/unchecked
-  - `focused` - When the checkbox receives focus
 
 
 ## Component Architecture

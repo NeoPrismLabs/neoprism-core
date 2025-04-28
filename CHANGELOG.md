@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 0.0.3
+
+### Added
+- `NeoSlider` component for selecting values from a continuous or discrete range
+- `NeoProgressBar` component for displaying progress indicators
+- Comprehensive documentation for all components in README
+- Added additional examples in example app
+
+### Fixed
+- Improved overlay handling in `NeoDropdown` component
+- Fixed layering issues with nested components
+- Improved focus handling in interactive components
+
 ## 0.0.2
 
 *Released: March 25, 2025*
