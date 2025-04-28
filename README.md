@@ -1076,12 +1076,7 @@ All NeoPrism components automatically track user interactions using the internal
 
 - For NeoCard:
   - `tapped` - When an interactive card is tapped
-```
 
-
-Let's also add an example showing how to combine the new components:
-
-```markdown
 ### Settings Panel Example
 
 ```dart
