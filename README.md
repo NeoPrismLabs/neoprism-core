@@ -15,7 +15,7 @@ Add the package to your pubspec.yaml:
 
 ```yaml
 dependencies:
-  neoprism_core: ^0.0.2
+  neoprism_core: ^0.0.3
 ```
 
 ## Usage
