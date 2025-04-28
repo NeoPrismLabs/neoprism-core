@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## 0.0.3+1
+
+*Released: April 29, 2025*
+
+### Added
+- Interactive component playground at [playground.neoprismlabs.in](https://playground.neoprismlabs.in)
+- Enhanced GitHub repository documentation with architecture diagrams
+
+### Fixed
+- Documentation improvements and typo corrections
+- Fixed inconsistencies in component property documentation
+- Improved README examples with more comprehensive use cases
+
 ## 0.0.3
 
 ### Added
