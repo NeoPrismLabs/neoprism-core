@@ -3,6 +3,7 @@ import 'package:neoprism_core/neoprism_core.dart';
 import 'package:neoprism_example/config/theme/app_theme.dart';
 
 void main() {
+  NeoPrismPluginRegistry().registerPlugin(ConsoleAnalyticsPlugin());
   runApp(const ExampleApp());
 }
 

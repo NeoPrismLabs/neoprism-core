@@ -14,3 +14,10 @@ export 'src/components/slider/neo_slider.dart';
 
 // Export theme
 export 'src/theme/theme.dart';
+
+// Export plugins
+export 'src/plugins/plugin.dart';
+export 'src/plugins/plugin_registry.dart';
+export 'src/plugins/events/event_bus.dart';
+export 'src/plugins/analytics/analytics_plugin.dart';
+export 'src/plugins/analytics/console_analytics_plugin.dart';

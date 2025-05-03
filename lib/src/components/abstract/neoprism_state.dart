@@ -4,8 +4,8 @@ import 'package:neoprism_core/src/theme/theme.dart';
 
 abstract class NeoprismComponentState<T extends NeoPrismComponent>
     extends State<T> {
-  void trackInteraction(String action) {
-    debugPrint('${widget.componentType} (${widget.id}): $action');
+  void trackInteraction(String action, [Map<String, dynamic>? metadata]) {
+    widget.trackInteraction(action, metadata);
   }
 
   NeoPrismThemeData getThemeData(BuildContext context) {
